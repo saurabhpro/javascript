@@ -48,7 +48,53 @@ module.exports = {
 
     // require that JSX labels use "htmlFor"
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
-    'jsx-a11y/label-has-for': ['error', { components: ['label'] }],
+    // deprecated: replaced by `label-has-associated-control` rule
+    'jsx-a11y/label-has-for': ['off', {
+      components: [],
+      required: {
+        every: ['nesting', 'id'],
+      },
+      allowChildren: false,
+    }],
+
+    // Enforce that a label tag has a text label and an associated control.
+    // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/b800f40a2a69ad48015ae9226fbe879f946757ed/docs/rules/label-has-associated-control.md
+    'jsx-a11y/label-has-associated-control': ['error', {
+      labelComponents: [],
+      labelAttributes: [],
+      controlComponents: [],
+      assert: 'both',
+      depth: 25
+    }],
+
+    // Enforce that a control (an interactive element) has a text label.
+    // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/control-has-associated-label.md
+    'jsx-a11y/control-has-associated-label': ['error', {
+      labelAttributes: ['label'],
+      controlComponents: [],
+      ignoreElements: [
+        'audio',
+        'canvas',
+        'embed',
+        'input',
+        'textarea',
+        'tr',
+        'video',
+      ],
+      ignoreRoles: [
+        'grid',
+        'listbox',
+        'menu',
+        'menubar',
+        'radiogroup',
+        'row',
+        'tablist',
+        'toolbar',
+        'tree',
+        'treegrid',
+      ],
+      depth: 5,
+    }],
 
     // require that mouseover/out come with focus/blur, for keyboard-only users
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
@@ -187,8 +233,14 @@ module.exports = {
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/0745af376cdc8686d85a361ce36952b1fb1ccf6e/docs/rules/anchor-is-valid.md
     'jsx-a11y/anchor-is-valid': ['error', {
       components: ['Link'],
-      specialLink: [],
+      specialLink: ['to'],
       aspects: ['noHref', 'invalidHref', 'preferButton'],
+    }],
+
+    // Ensure the autocomplete attribute is correct and suitable for the form field it is used with
+    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/29c68596b15c4ff0a40daae6d4a2670e36e37d35/docs/rules/autocomplete-valid.md
+    'jsx-a11y/autocomplete-valid': ['off', {
+      inputComponents: [],
     }],
   },
 };
